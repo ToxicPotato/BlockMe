@@ -1,8 +1,10 @@
 {
-    "version" : "JE_1_21_1",
+    "version": "JE_1_21_1",
+    "theme": "none",
     "blocks_enabled": {
-        "falling_blocks" : true
+        "expensive_blocks": true,
+        "rare_blocks": true,
+        "unobtainable_survival": false
     },
-    "save_location": "out",
-    "theme": "none"
+    "save_location": "out"
 }

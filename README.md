@@ -93,6 +93,47 @@ You can use predefined block palettes by setting the `theme` in `settings.json`:
 - `ocean` - Ocean-themed blocks (prismarine, ice, etc.)
 - `none` - Use all available blocks (default)
 
+### Block Categories (Rarity Control)
+
+Control which blocks to use based on rarity and availability. Perfect for survival-friendly or budget builds!
+
+```json
+{
+  "version": "JE_1_21_1",
+  "theme": "colorful",
+  "blocks_enabled": {
+    "expensive_blocks": false,
+    "rare_blocks": false,
+    "unobtainable_survival": false
+  }
+}
+```
+
+**Available categories:**
+
+- **`expensive_blocks`** - Costly blocks (diamond, netherite, emerald, gold, iron, etc.)
+  Set to `false` for budget-friendly survival builds
+
+- **`rare_blocks`** - Difficult to obtain (ancient_debris, beacon, sea_lantern, prismarine, end_stone, sculk, etc.)
+  Set to `false` to use only common blocks
+
+- **`unobtainable_survival`** - Creative-only blocks (bedrock, barrier, command_block, spawner, etc.)
+  Usually `false` unless building in creative mode
+
+**Example - Budget Survival Build:**
+```json
+{
+  "version": "JE_1_20_4",
+  "theme": "colorful",
+  "blocks_enabled": {
+    "expensive_blocks": false,
+    "rare_blocks": false
+  }
+}
+```
+
+See [CONFIGURATION.md](CONFIGURATION.md) for detailed documentation and all available blocks in each category.
+
 ### Settings Reference
 
 **Required:**
@@ -111,6 +152,7 @@ You can use predefined block palettes by setting the `theme` in `settings.json`:
 
 - ✅ Automatic skin downloading from Minecraft username
 - ✅ Customizable block palettes (10 predefined themes)
+- ✅ Block rarity control (disable expensive/rare blocks for survival-friendly builds)
 - ✅ Falling block detection and automatic replacement
 - ✅ Material list with Minecraft stack notation (e.g., "3x64 + 12")
 - ✅ Support for multiple Minecraft versions
@@ -136,6 +178,8 @@ You can use predefined block palettes by setting the `theme` in `settings.json`:
 ```
 BlockMe/
 ├── main.py                 # Entry point
+├── README.md               # Project overview
+├── CONFIGURATION.md        # Detailed configuration guide
 ├── blockme/                # Core package
 │   ├── __init__.py        # Package exports
 │   ├── constants.py       # Global constants

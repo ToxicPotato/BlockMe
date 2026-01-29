@@ -1,5 +1,5 @@
 {
-    "falling_blocks" : [
+    "falling_blocks": [
         "gravel",
         "black_concrete_powder",
         "brown_concrete_powder",
@@ -19,5 +19,58 @@
         "sand",
         "white_concrete_powder",
         "yellow_concrete_powder"
+    ],
+    "expensive_blocks": [
+        "diamond_block",
+        "netherite_block",
+        "emerald_block",
+        "gold_block",
+        "lapis_block",
+        "redstone_block",
+        "iron_block",
+        "coal_block",
+        "copper_block",
+        "exposed_copper",
+        "weathered_copper",
+        "oxidized_copper",
+        "cut_copper",
+        "exposed_cut_copper",
+        "weathered_cut_copper",
+        "oxidized_cut_copper"
+    ],
+    "rare_blocks": [
+        "ancient_debris",
+        "beacon",
+        "sea_lantern",
+        "prismarine",
+        "prismarine_bricks",
+        "dark_prismarine",
+        "end_stone",
+        "purpur_block",
+        "purpur_pillar",
+        "chorus_plant",
+        "chorus_flower",
+        "dragon_egg",
+        "sponge",
+        "wet_sponge",
+        "slime_block",
+        "honey_block",
+        "sculk",
+        "sculk_catalyst",
+        "sculk_sensor",
+        "sculk_shrieker"
+    ],
+    "unobtainable_survival": [
+        "bedrock",
+        "barrier",
+        "command_block",
+        "chain_command_block",
+        "repeating_command_block",
+        "structure_void",
+        "structure_block",
+        "jigsaw",
+        "light",
+        "spawner",
+        "reinforced_deepslate"
     ]
 }
