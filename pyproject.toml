@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "blockme"
+version = "1.0.0"
+description = "Convert Minecraft skins to 3D block statues (.schematic files)"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "BlockMe Contributors"}
+]
+keywords = ["minecraft", "skin", "schematic", "blocks", "conversion"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: End Users/Desktop",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "mcschematic==11.4.3",
+    "Pillow==10.1.0",
+    "requests==2.31.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/ToxicPotato/BlockMe"
+Repository = "https://github.com/ToxicPotato/BlockMe"
+Issues = "https://github.com/ToxicPotato/BlockMe/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["blockme*"]
+
+[tool.setuptools.package-data]
+blockme = ["py.typed"]

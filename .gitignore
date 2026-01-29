@@ -1,13 +1,37 @@
+# Python
 __pycache__/
 *.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
 
-out/*
-!out/.gitkeep
-data/settings.json
-
+# Virtual environments
 .venv/
 venv/
+env/
+ENV/
+
+# Output files
+out/*
+!out/.gitkeep
+
+# User configuration
+data/settings.json
+
+# IDE
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
+
+# OS
 .DS_Store
 Thumbs.db
+
+# Logs
+*.log

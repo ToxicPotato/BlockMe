@@ -1,166 +1,252 @@
 # BlockMe
 
-## Project Description
+Convert Minecraft player skins into 3D block statues that can be imported into Minecraft!
 
-BlockMe is a Python-based tool that converts a Minecraft skin into a three-dimensional block statue and exports the result as a `.schem` file. This file can then be imported into Minecraft using tools such as WorldEdit or litmatica. In addition, a materials list is generated showing which blocks are used and in what quantities.
-
-The project is intended as an experimental and practical utility for visualizing Minecraft skins in block form. It focuses on simple configuration, reusable palettes, and a clear separation between data, logic, and the conversion pipeline.
+BlockMe downloads a player's skin, converts it pixel-by-pixel into colored blocks, and exports it as a `.schem` file compatible with WorldEdit and Litematica. A materials list is also generated showing exactly which blocks you need and in what quantities.
 
 ---
 
-## Overall Workflow
+## Installation
+
+### Prerequisites
+
+- Python 3.8 or higher
+- pip (Python package manager)
+
+### Quick Start
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/ToxicPotato/BlockMe.git
+   cd BlockMe
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Set up configuration**
+
+   ```bash
+   cp data/settings.default.json data/settings.json
+   ```
+
+   Edit `data/settings.json` to set your Minecraft version and preferences.
+
+4. **Run the program**
+   ```bash
+   python main.py
+   ```
+
+---
+
+## Usage
+
+When you run the program, you'll be prompted to enter a Minecraft username:
+
+```bash
+$ python main.py
+Minecraft username: Notch
+2026-01-29 12:00:00 - blockme - INFO - Fetching skin for user: Notch
+2026-01-29 12:00:01 - blockme - INFO - Successfully fetched skin for user: Notch
+2026-01-29 12:00:01 - blockme - INFO - Converting skin to schematic...
+2026-01-29 12:00:02 - blockme - INFO - Schematic saved to out/Notch.schematic
+```
+
+The program will:
+
+1. Download the player's skin from Mojang servers
+2. Convert it to a 3D block statue
+3. Generate files in the `out/` directory:
+   - `<username>.schem` - The 3D structure
+   - `<username>_materials.txt` - List of required blocks
+
+---
+
+## Configuration
+
+### Block Palettes (Themes)
+
+You can use predefined block palettes by setting the `theme` in `settings.json`:
+
+```json
+{
+  "version": "JE_1_20_4",
+  "theme": "stone"
+}
+```
+
+**Available themes:**
+
+- `stone` - Light gray blocks only (smooth stone, andesite, etc.)
+- `wood` - Various wood types
+- `colorful` - Concrete and terracotta blocks
+- `wool` - All wool colors
+- `terracotta` - Terracotta variants
+- `natural` - Natural blocks (grass, dirt, logs, etc.)
+- `nether` - Nether-themed blocks
+- `ores` - Ore blocks
+- `quartz` - Quartz variants
+- `ocean` - Ocean-themed blocks (prismarine, ice, etc.)
+- `none` - Use all available blocks (default)
+
+### Settings Reference
+
+**Required:**
+
+- `version` - Minecraft version (e.g., `"JE_1_20_4"`)
+
+**Optional:**
+
+- `theme` - Block palette theme (default: `"none"`)
+- `blocks_enabled` - Enable/disable specific block categories
+- `save_location` - Custom output directory (default: `"out/"`)
+
+---
+
+## Features
+
+- ✅ Automatic skin downloading from Minecraft username
+- ✅ Customizable block palettes (10 predefined themes)
+- ✅ Falling block detection and automatic replacement
+- ✅ Material list with Minecraft stack notation (e.g., "3x64 + 12")
+- ✅ Support for multiple Minecraft versions
+
+---
+
+## How It Works
 
 1. The user provides a Minecraft username
-2. The skin is downloaded via an external API
+2. The skin is downloaded via the Ashcon API
 3. The skin is processed pixel by pixel
-4. A mapping file translates 2D pixels into 3D coordinates
+4. A mapping file (`mapping_4px.png`) translates 2D pixels into 3D coordinates
 5. Each pixel color is matched to the closest available block color
-6. The result is exported as:
-   - a `.schem` file
-   - a materials list (`_materials.txt`)
+6. Falling blocks are replaced with non-falling alternatives when unsupported
+7. The result is exported as:
+   - A `.schem` file
+   - A materials list (`_materials.txt`)
 
 ---
 
-## Project Structure and Files
+## Project Structure
 
-### Root Directory
+```
+BlockMe/
+├── main.py                 # Entry point
+├── blockme/                # Core package
+│   ├── __init__.py        # Package exports
+│   ├── constants.py       # Global constants
+│   ├── logger.py          # Logging configuration
+│   ├── utils.py           # Utility functions
+│   ├── skin_fetch.py      # Skin downloading
+│   ├── mapping.py         # Coordinate mapping
+│   ├── palette.py         # Block color matching
+│   └── convert.py         # Schematic generation
+├── data/
+│   ├── settings.json      # User configuration
+│   ├── settings.default.json
+│   ├── blocks.json        # Block color definitions
+│   ├── blocktypes.json    # Block categories
+│   └── palettes.json      # Theme definitions
+├── assets/
+│   └── mapping_4px.png    # 3D coordinate mapping
+├── out/                   # Output directory
+├── requirements.txt       # Dependencies
+└── pyproject.toml         # Package metadata
+```
+
+### Key Modules
 
 #### `main.py`
 
-The main entry point of the program. Responsible for:
+Entry point that orchestrates the entire conversion process. Handles user input, loads configuration, coordinates modules, and manages the conversion workflow.
 
-- Reading user input (Minecraft username)
-- Loading configuration from `settings.json`
-- Initializing and running the conversion process
-- Coordinating the interaction between modules
+#### `blockme/convert.py`
 
-#### `convert.py`
+Core conversion logic that transforms skin images into block structures. Handles pixel iteration, 3D positioning, color matching, falling block replacement, and material tracking.
 
-Contains the core logic for converting image data into a block structure.
+#### `blockme/palette.py`
 
-- Iterates over skin pixels
-- Uses mapping data to determine 3D positions
-- Matches colors to blocks
-- Builds the schematic structure
-- Tracks and logs material usage
+Manages block color palettes and color matching. Loads block data, supports theme-based filtering, computes color distances using Manhattan distance, and finds the best matching blocks.
 
----
+#### `blockme/skin_fetch.py`
 
-### `data/`
+Downloads Minecraft skins via the Ashcon API. Validates skin dimensions (64x64), handles API errors, and returns PIL Image objects.
 
-Contains configuration files and block metadata.
+#### `blockme/mapping.py`
 
-#### `settings.json`
+Interprets the mapping image that encodes 2D-to-3D coordinate transformations. Reads PNG files where RGB values represent (x, y, z) coordinates.
 
-Active configuration file used at runtime.
-Typical options include:
+#### `blockme/logger.py`
 
-- Minecraft version used when saving the schematic
-- Enabled or disabled block type categories
-- Output directory
+Centralized logging with configurable levels, console output, optional file logging, and formatted timestamps.
 
-#### `settings.default.json`
+#### `blockme/constants.py`
 
-Default configuration template. Intended as a reference or fallback.
+Global constants including Minecraft parameters (stack size, block names), image processing values, API configuration, and default settings.
 
-#### `blocks.json`
+#### `blockme/utils.py`
 
-Defines available Minecraft blocks along with their RGBA color values.
-Used during color matching to find the closest block color.
-
-#### `blocktypes.json`
-
-Defines block categories (for example falling blocks).
-These categories can be enabled or disabled via `settings.json`.
+Utility functions like `format_stacks()` which converts block counts to Minecraft stack notation.
 
 ---
 
-### `assets/`
+## Output Files
 
-#### `mapping_4px.png`
+### `<username>.schematic`
 
-A specially designed mapping image that translates 2D skin pixels into 3D coordinates.
+The 3D block structure that can be imported into Minecraft using:
 
-- Transparent pixels are ignored
-- RGB values encode a position in 3D space
-- The pixel index determines which part of the skin is used
+- **WorldEdit** - `/schem load <username>`
+- **Litematica** - Load through the schematic browser
 
-This file fully defines the geometric structure of the generated statue.
+### `<username>_materials.txt`
 
----
+A sorted list of required blocks with quantities in stack notation:
 
-### Additional Modules
-
-#### `palette.py`
-
-Handles block color palettes.
-
-- Loads block colors from `blocks.json`
-- Computes color differences
-- Returns the closest matching block
-
-#### `mapping.py`
-
-Loads and interprets the mapping image.
-
-- Reads pixel data
-- Converts encoded RGB values into coordinates
-
-#### `image_modes.py`
-
-Provides image processing utilities.
-
-- Grayscale conversion
-- Extension point for alternative image modes
-
-#### `skin_fetch.py`
-
-Responsible for downloading Minecraft skins.
-
-- Uses an external API based on username
-- Returns a processed image object
-
----
-
-## Output
-
-After execution, the following files are generated:
-
-- `<username>.schematic`
-- `<username>_materials.txt`
-
-The materials list is sorted by most-used blocks and formats counts into stack-based notation (64-stacks).
-
----
-
-## Dependencies
-
-See `requirements.txt`. The project primarily relies on:
-
-- Pillow (image processing)
-- requests (HTTP / API access)
-- mcschematic (schematic generation)
+```
+minecraft:stone: 256 (4x64)
+minecraft:oak_planks: 128 (2x64)
+minecraft:glass: 42 (42)
+```
 
 ---
 
 ## Limitations and Notes
 
-- Transparent skin pixels are ignored
-- Color matching uses a simple RGBA distance (not perceptual)
-- Falling blocks may collapse in survival mode
-- The mapping image completely defines the statue geometry
+- Transparent skin pixels are ignored and not converted to blocks
+- Color matching uses Manhattan distance (RGBA) rather than perceptual color space
+- Falling blocks (sand, gravel, concrete powder) are automatically replaced with similar non-falling blocks when they lack support
+- The `mapping_4px.png` file completely defines the statue geometry and shape
+- Skin format must be 64x64 pixels (standard Minecraft format)
 
 ---
 
-## Possible Improvements
+## Dependencies
 
-- Command-line arguments instead of `input()`
-- Multiple mapping files (different resolutions or styles)
-- Improved color matching (LAB / perceptual distance)
-- Support for multiple Minecraft versions
+- **mcschematic** (11.4.3) - Minecraft schematic file generation
+- **Pillow** (10.1.0) - Image processing and manipulation
+- **requests** (2.31.0) - HTTP requests for skin downloading
+
+See `requirements.txt` for complete dependency list.
+
+---
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit issues or pull requests.
 
 ---
 
 ## Credits
 
-This project is based on and extended from `AxoSpyeyes/skin2sta2`.
+This project is based on and extended from [`AxoSpyeyes/skin2sta2`](https://github.com/AxoSpyeyes/skin2sta2).
+
+---
+
+## License
+
+MIT License - See LICENSE file for details.

@@ -1,0 +1,4 @@
+# Core dependencies for BlockMe
+mcschematic==11.4.3
+Pillow==10.1.0
+requests==2.31.0
