@@ -1,3 +1,6 @@
+from blockme.constants import MINECRAFT_STACK_SIZE
+
+
 def format_stacks(n):
     """
     Format a block count into Minecraft stacks notation.
@@ -8,8 +11,8 @@ def format_stacks(n):
     Returns:
         Formatted string (e.g., "3x64 + 12" for 204 blocks)
     """
-    stacks = n // 64
-    rest = n % 64
+    stacks = n // MINECRAFT_STACK_SIZE
+    rest = n % MINECRAFT_STACK_SIZE
     if stacks == 0:
         return f"{rest}"
     if rest == 0:
