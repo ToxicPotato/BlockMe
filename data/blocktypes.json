@@ -21,6 +21,10 @@
         "yellow_concrete_powder"
     ],
     "expensive_blocks": [
+        "diamond_ore",
+        "emerald_ore",
+        "gold_ore",
+        "deepslate_emerald_ore",
         "diamond_block",
         "netherite_block",
         "emerald_block",

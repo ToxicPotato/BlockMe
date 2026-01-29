@@ -70,7 +70,7 @@ def convert_to_schematic_from_positions(skin_img, mapping_positions, palette):
         if block in falling_blocks:
             # Check if there's a block below to support it
             try:
-                block_below = schem.getBlockAt((x, y + SUPPORT_CHECK_OFFSET, z))
+                block_below = schem.getBlockStateAt((x, y + SUPPORT_CHECK_OFFSET, z))
                 # If no block below (returns "minecraft:air" or None), find non-falling alternative
                 if block_below is None or block_below == MINECRAFT_AIR_BLOCK:
                     # Get a similar colored non-falling block
@@ -78,7 +78,6 @@ def convert_to_schematic_from_positions(skin_img, mapping_positions, palette):
                     if block is None:
                         logger.error(f"No non-falling blocks available for color {rgba}")
                         raise ValueError(f"No non-falling blocks available for color {rgba}")
-                    logger.debug(f"Replaced falling block with non-falling alternative at ({x}, {y}, {z})")
             except (IndexError, KeyError, AttributeError) as e:
                 # If we can't check below (out of bounds or schematic error), use non-falling block
                 logger.debug(f"Cannot check block below at ({x}, {y}, {z}): {e}")
