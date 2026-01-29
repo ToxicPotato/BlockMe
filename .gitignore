@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+
+out/*
+!out/.gitkeep
+data/settings.json
+
+.venv/
+venv/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
