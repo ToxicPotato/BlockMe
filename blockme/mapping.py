@@ -1,10 +1,12 @@
+from pathlib import Path
+
 from PIL import Image
-import os
+
 from blockme.constants import IMAGE_MODE_RGBA, TRANSPARENT_ALPHA
 from blockme.logger import logger
 
 
-def load_mapping_positions(path: str):
+def load_mapping_positions(path):
     """
     Load pixel-to-3D-coordinate mappings from a mapping image file.
 
@@ -15,7 +17,7 @@ def load_mapping_positions(path: str):
     - Alpha = 0 means skip this pixel
 
     Args:
-        path: File path to the mapping image (PNG with RGBA format)
+        path: File path to the mapping image (PNG with RGBA format, str or Path)
 
     Returns:
         List of tuples: (pixel_index, (x, y, z)) for each non-transparent pixel
@@ -25,7 +27,8 @@ def load_mapping_positions(path: str):
     """
     logger.info(f"Loading mapping positions from: {path}")
 
-    if not os.path.exists(path):
+    path = Path(path)
+    if not path.exists():
         logger.error(f"Mapping file not found: {path}")
         raise FileNotFoundError(f"Mapping file not found: {path}")
 

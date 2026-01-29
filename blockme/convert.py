@@ -1,5 +1,7 @@
-import mcschematic
 from collections import Counter
+
+import mcschematic
+
 from blockme.constants import (
     ALPHA_CHANNEL_INDEX,
     TRANSPARENT_ALPHA,

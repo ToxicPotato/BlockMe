@@ -1,6 +1,8 @@
+from io import BytesIO
+
 import requests
 from PIL import Image
-from io import BytesIO
+
 from blockme.constants import (
     ASHCON_API_BASE_URL,
     REQUEST_TIMEOUT,

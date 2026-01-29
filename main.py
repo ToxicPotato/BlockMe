@@ -1,15 +1,17 @@
 import json
 import sys
+from pathlib import Path
+
 import mcschematic
 import requests
-from blockme.skin_fetch import get_skin_image_from_username
+
+from blockme.constants import REQUIRED_SETTINGS_KEYS, DEFAULT_SETTINGS
+from blockme.convert import convert_to_schematic_from_positions
+from blockme.logger import logger
 from blockme.mapping import load_mapping_positions
 from blockme.palette import Palette
-from blockme.convert import convert_to_schematic_from_positions
+from blockme.skin_fetch import get_skin_image_from_username
 from blockme.utils import format_stacks
-from blockme.constants import REQUIRED_SETTINGS_KEYS, DEFAULT_SETTINGS
-from blockme.logger import logger
-from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 DATA = ROOT / "data"
