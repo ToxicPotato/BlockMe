@@ -1,8 +1,8 @@
 {
     "version" : "JE_1_21_1",
     "blocks_enabled": {
-        "falling_blocks" : false
+        "falling_blocks" : true
     },
     "save_location": "out",
-    "grayscale": false
+    "theme": "none"
 }

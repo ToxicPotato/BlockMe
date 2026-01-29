@@ -1,10 +1,10 @@
 import json
 import mcschematic
-from blockme.skin_fetch import getSkinImageFromUsername
+from blockme.skin_fetch import get_skin_image_from_username
 from blockme.mapping import load_mapping_positions
 from blockme.palette import Palette
 from blockme.convert import convert_to_schematic_from_positions
-from blockme.image_modes import grayscale
+from blockme.utils import format_stacks
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
@@ -12,34 +12,30 @@ DATA = ROOT / "data"
 ASSETS = ROOT / "assets"
 OUT_DIR = ROOT / "out"
 
-
-def format_stacks(n):
-    stacks = n // 64
-    rest = n % 64
-    if stacks == 0:
-        return f"{rest}"
-    if rest == 0:
-        return f"{stacks}x64"
-    return f"{stacks}x64 + {rest}"
-
-
 with open(DATA / "settings.json", encoding="utf-8") as f:
     settings = json.load(f)
 
 username = input("Minecraft username: ")
 
 try:
-    skin = getSkinImageFromUsername(username)
+    skin = get_skin_image_from_username(username)
 except Exception as e:
     print("Not able to fetch skin:", e)
     exit(1)
 
-if settings.get("grayscale"):
-    skin = grayscale(skin)
+# Display theme info if specified
+theme = settings.get("theme")
+if theme and theme != "none":
+    print(f"Using '{theme}' block palette...")
 
 mapping = load_mapping_positions(ASSETS / "mapping_4px.png")
 
-palette = Palette(DATA / "blocks.json", DATA / "blocktypes.json", settings)
+palette = Palette(
+    DATA / "blocks.json", 
+    DATA / "blocktypes.json", 
+    settings,
+    DATA / "palettes.json"
+)
 
 schem, counts = convert_to_schematic_from_positions(skin, mapping, palette)
 

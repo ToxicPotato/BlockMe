@@ -4,12 +4,12 @@ from io import BytesIO
 
 url = "https://api.ashcon.app/mojang/v2/user/"
 
-def getSkinImageFromUsername(Username):
-    fullUrl = url + Username
+def get_skin_image_from_username(username):
+    full_url = url + username
 
-    r = requests.get(fullUrl)
+    r = requests.get(full_url)
     if r.status_code != 200:
-        raise Exception("Error fetching skin data for user: " + Username)
+        raise Exception("Error fetching skin data for user: " + username)
     
     skin_url = r.json()["textures"]["skin"]["url"]
 
