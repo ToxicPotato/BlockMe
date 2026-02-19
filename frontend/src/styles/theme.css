@@ -1,0 +1,146 @@
+/* =================================================================
+   BlockMe – Theme System
+   =================================================================
+   All UI colors, fonts and shadows live here as CSS custom
+   properties. Components reference var(--color-x) only — never
+   hardcoded hex values.
+
+   Adding a new theme:
+     1. Add a new [data-theme="<name>"] block below with your values.
+     2. Set  <html data-theme="<name>">  in index.html (or at
+        runtime via document.documentElement.dataset.theme = "<name>").
+   ================================================================= */
+
+/* ── Defaults = Minecraft Deepslate ─────────────────────────────
+   :root ensures the app renders correctly even if the data-theme
+   attribute is missing (e.g. during SSR, testing, or a future
+   theme that omits some variables).
+   ─────────────────────────────────────────────────────────────── */
+:root {
+  /* Background layers */
+  --color-bg-base:          #1a1d21;
+  --color-bg-surface:       #22262b;
+  --color-bg-surface-deep:  #16191d;
+  --color-bg-tag:           #1c2226;
+  --color-bg-btn-primary:   #1f3a52;
+  --color-bg-btn-download:  #1c2a36;
+  --color-bg-overlay:       rgba(15, 17, 20, 0.82);
+  --color-bg-advanced:      rgba(0, 0, 0, 0.25);
+  --color-bg-error:         rgba(80, 10, 10, 0.45);
+
+  /* Borders */
+  --color-border-subtle:    #2e3338;
+  --color-border-input:     #3a4048;
+  --color-border-accent:    #3a7a8a;
+  --color-border-dashed:    #3a4048;
+  --color-border-tag:       #3a4048;
+
+  /* Text */
+  --color-text-primary:     #cde0f0;
+  --color-text-title:       #a8d8e8;
+  --color-text-accent:      #7acfe0;
+  --color-text-secondary:   #7a8a98;
+  --color-text-muted:       #4a5560;
+  --color-text-row-name:    #c8daea;
+  --color-text-row-id:      #4a6878;
+  --color-text-error:       #ff7070;
+
+  /* Accent – diamond-ore cyan */
+  --color-accent:           #4dd9e8;
+  --color-accent-dim:       #2a8a98;
+
+  /* Three.js scene */
+  --color-grid-cell:        #2e3d45;
+  --color-grid-section:     #4a6878;
+  --color-placeholder-mesh: #383e48;
+
+  /* Fonts */
+  --font-body:    'Segoe UI', system-ui, sans-serif;
+  --font-heading: 'VT323', 'Courier New', monospace;
+
+  /* Pixel / blocky shadows */
+  --shadow-pixel-card:
+    0 0 0 2px #2e3338,
+    4px 4px 0 0 #16191d,
+    8px 8px 0 0 #0e1113;
+
+  --shadow-pixel-panel:
+    inset -2px 0 0 #2e3338;
+}
+
+/* ── Minecraft Deepslate theme ───────────────────────────────────
+   Identical to :root above. Self-contained so it can be diffed
+   cleanly against future themes.
+   ─────────────────────────────────────────────────────────────── */
+[data-theme="minecraft-deepslate"] {
+  --color-bg-base:          #1a1d21;
+  --color-bg-surface:       #22262b;
+  --color-bg-surface-deep:  #16191d;
+  --color-bg-tag:           #1c2226;
+  --color-bg-btn-primary:   #1f3a52;
+  --color-bg-btn-download:  #1c2a36;
+  --color-bg-overlay:       rgba(15, 17, 20, 0.82);
+  --color-bg-advanced:      rgba(0, 0, 0, 0.25);
+  --color-bg-error:         rgba(80, 10, 10, 0.45);
+
+  --color-border-subtle:    #2e3338;
+  --color-border-input:     #3a4048;
+  --color-border-accent:    #3a7a8a;
+  --color-border-dashed:    #3a4048;
+  --color-border-tag:       #3a4048;
+
+  --color-text-primary:     #cde0f0;
+  --color-text-title:       #a8d8e8;
+  --color-text-accent:      #7acfe0;
+  --color-text-secondary:   #7a8a98;
+  --color-text-muted:       #4a5560;
+  --color-text-row-name:    #c8daea;
+  --color-text-row-id:      #4a6878;
+  --color-text-error:       #ff7070;
+
+  --color-accent:           #4dd9e8;
+  --color-accent-dim:       #2a8a98;
+
+  --color-grid-cell:        #2e3d45;
+  --color-grid-section:     #4a6878;
+  --color-placeholder-mesh: #383e48;
+
+  --font-body:    'Segoe UI', system-ui, sans-serif;
+  --font-heading: 'VT323', 'Courier New', monospace;
+
+  --shadow-pixel-card:
+    0 0 0 2px #2e3338,
+    4px 4px 0 0 #16191d,
+    8px 8px 0 0 #0e1113;
+
+  --shadow-pixel-panel:
+    inset -2px 0 0 #2e3338;
+}
+
+/* ── Global resets ───────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin:     0;
+  padding:    0;
+  background: var(--color-bg-base);
+  font-family: var(--font-body);
+  color:      var(--color-text-primary);
+}
+
+/* Scrollbar styling (Webkit) */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-surface-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-input);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-accent);
+}
